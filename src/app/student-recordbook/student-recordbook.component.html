@@ -1,0 +1,270 @@
+<br>
+<div class="container">
+  <!--First Row-->
+  <div class="row">
+    <!--Left Column Some Information-->
+    <div class="col-md">
+      <h2>AWS CRUD Operation with MicroServices</h2>
+      <p>
+        This is kind of a redo of an already created project. The difference is that instead of doing an AJAX request, I
+        will be using Angular's <em>DataService</em>. I will also be redoing the whole layout for it to be done using
+        BootStrap version that is 4+, instead of 3.3.7.
+      </p>
+      <p>
+        I will still be using AWS Lambda (Node.js) to be the backend that interacts with a DynamoDB. I will still be
+        using Amazon API GateWay to send http requests to .
+      </p>
+      <p>
+        The functions that this page is going to be doing is rather self-explanatory - the name says it all. There is a
+        form to <strong>Create</strong> new student's, there is a table to display the students, each record has
+        settings tied to it, which allow the user to <strong>Read</strong>, <strong>Update</strong>, or
+        <strong>Delete</strong> a specific student. All these functions are otherwise known as <strong>CRUD</strong>.
+      </p>
+    </div>
+    <!--Right Column Create Form-->
+    <div class="col-md">
+      <div class="card">
+        <div class="card-header text-center">
+          <h4>Enter Student Information</h4>
+        </div>
+        <div class="card-body">
+          <form>
+            <fieldset>
+              <div class="row">
+                <div class="form-group col-lg">
+                  <label>Student ID:</label><input id="studentid" class="form-control" type="text"
+                    placeholder="Enter Student ID">
+                </div>
+                <div class="form-group col-lg">
+                  <label>First Name:</label><input id="firstname" class="form-control" type="text"
+                    placeholder="Enter First Name">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg">
+                  <label>Last Name:</label><input id="lastname" class="form-control" type="text"
+                    placeholder="Enter Last Name">
+                </div>
+                <div class="form-group col-lg">
+                  <label>GPA:</label><input id="gpa" class="form-control" type="text" placeholder="Enter GPA">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg">
+                  <label>Graduation Date:</label><input id="graduationdate" class="form-control" type="date"
+                    placeholder="Enter Graduation Data">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg">
+                  <input onclick="CreateStudent()" class="btn btn-primary btn-lg btn-block" type="button"
+                    value="Add Student">
+                  <input onclick="Clear()" class="btn btn-light btn-lg btn-block" type="button" value="Clear">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!--Second Row Table-->
+  <div class="row">
+    <!--Single Main Column-->
+    <div class="col-md">
+      <h4 class="text-center">Student Recordbook Table</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>GPA</th>
+              <th>Graduation Date</th>
+              <th>Settings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Steven</td>
+              <td>Rubio</td>
+              <td>4.0</td>
+              <td>2018-12-08</td>
+              <td class="text-center">
+                <div class="btn-group" role="group">
+                  <input type="button" (click)="Settings_click($event)" class="btn btn-primary stud-btn" value="View">
+                  <input type="button" (click)="Settings_click($event)" class="btn btn-secondary stud-btn"
+                    value="Update">
+                  <input type="button" (click)="Settings_click($event)" class="btn btn-danger stud-btn" value="Delete">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--Modals are below-->
+
+  <!--Update Modal
+  <div class="row">
+    <div class="col-md">
+      <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Student Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <fieldset>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Student ID:</label><input class="form-control" type="text"
+                        name="StudentId" [(ngModel)]="student.StudentID" readonly>
+                    </div>
+                    <div class="form-group col-lg">
+                      <label>First Name:</label><input class="form-control" type="text"
+                        name="FirstName" [(ngModel)]="student.First">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Last Name:</label><input class="form-control" type="text"
+                        name="LastName" [(ngModel)]="student.Last">
+                    </div>
+                    <div class="form-group col-lg">
+                      <label>GPA:</label><input class="form-control" type="text" name="GPA"
+                        [(ngModel)]="student.GPA">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Graduation Date:</label><input class="form-control" type="date"
+                        name="GraduationDate" [(ngModel)]="student.GradDate">
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  View Student Modal
+  <div class="row">
+    <div class="col-md">
+      <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">View Student Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <fieldset>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Student ID:</label>
+                      <input class="form-control" type="text" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="student.StudentID" readonly>
+                    </div>
+                    <div class="form-group col-lg">
+                      <label>First Name:</label>
+                      <input class="form-control" type="text" name="FirstName"
+                        [(ngModel)]="student.First" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Last Name:</label>
+                      <input class="form-control" type="text" name="LastName"
+                        [(ngModel)]="student.Last" readonly>
+                    </div>
+                    <div class="form-group col-lg">
+                      <label>GPA:</label>
+                      <input class="form-control" type="text" name="GPA"
+                        [(ngModel)]="student.GPA" readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Graduation Date:</label>
+                      <input class="form-control" type="date" name="GraduationDate"
+                        [(ngModel)]="student.GradDate" readonly>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  Delete Student Modal
+  <div class="row">
+    <div class="col-md">
+      <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Are you sure you want to delete the following student?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <fieldset>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>Student ID:</label><input class="form-control" type="text" name="StudentId" [(ngModel)]="student.StudentID"
+                        readonly>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-lg">
+                      <label>First Name:</label><input class="form-control" type="text" name="FirstName"
+                      [(ngModel)]="student.First"
+                        readonly>
+                    </div>
+                    <div class="form-group col-lg">
+                      <label>Last Name:</label><input class="form-control" type="text" name="LastName"
+                      [(ngModel)]="student.Last"
+                        readonly>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>-->

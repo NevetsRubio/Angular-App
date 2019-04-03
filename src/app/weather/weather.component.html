@@ -1,0 +1,187 @@
+<br>
+<div class="container">
+  <!--FORM-->
+  <div class="row">
+    <div class="col-md">
+      <form>
+        <legend class="text-center">
+          <h3>Get Weather by Longitude and Latitude</h3>
+        </legend>
+        <fieldset>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-group">
+                <label for="txtLat">Latitude</label>
+                <input [(ngModel)]="lat" name="lat" class="form-control" type="number">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-group">
+                <label for="txtLong">Longitude</label>
+                <input [(ngModel)]="long" name="long" class="form-control" type="number">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <input (click)="getWeather()" type="button" class='btn btn-primary btn-block' value="Get Weather Forecast">
+            </div>
+            <div class="col-md">
+              <input (click)="clearInputs()" type="button" class='btn btn-secondary btn-block' value="Clear Inputs">
+            </div>
+            <div class="col-md">
+              <input type="button" (click)="getDefaultWeather()" class='btn btn-primary btn-block' value="Use Reno, NV (Default)">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <!--FORM END-->
+
+  <br>
+  <br>
+
+  <!--WEATHER RESULTS-->
+  <div class="row">
+    <div class="col-md">
+      <div class="card" *ngIf="weatherObject">
+        <div class="card-header">
+          <!--WEATHER NAVIGATION-->
+          <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+            <li class="nav-item" *ngIf="forecastObject">
+              <a class="nav-link active" id="forecast-tab" data-toggle="tab" href="#forecast-content" role="tab"
+                aria-controls="forecast-content" aria-selected="true">Forecast</a>
+            </li>
+            <li class="nav-item" *ngIf="hourlyObject">
+              <a class="nav-link" id="hourly-forecast-tab" data-toggle="tab" href="#hourly-forecast-content" role="tab"
+                aria-controls="hourly-forecast-tab" aria-selected="false">Hourly Forecast</a>
+            </li>
+            <li class="nav-item" *ngIf="stationsObject">
+              <a class="nav-link" id="stations-tab" data-toggle="tab" href="#stations-content" role="tab" aria-controls="stations-tab"
+                aria-selected="false">Stations</a>
+            </li>
+          </ul>
+          <!--WEATHER NAVIGATION End-->
+        </div>
+        <div class="card-body">
+          <!--WEATHER CONTENT-->
+          <div class="tab-content" id="myTabContent" *ngIf="weatherObject">
+            <!--FORECAST-->
+            <div class="tab-pane fade show active" id="forecast-content" role="tabpanel" aria-labelledby="forecast-tab"
+              *ngIf="forecastObject">
+              <div *ngFor="let Forecast of forecastObject.properties.periods" class="row">
+                <div class="col-md">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4>{{ Forecast.name }} : {{Forecast.shortForecast}} </h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <div class="card-img">
+                            <img [src]="Forecast.icon">
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <h2>{{Forecast.temperature}} {{Forecast.temperatureUnit}}&deg;</h2>
+                        </div>
+                        <div class="col-md-8">
+                          <p><strong>Detailed Forecast:</strong> {{Forecast.detailedForecast}}</p>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p><strong>Wind Direction: </strong>{{Forecast.windDirection}}</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p><strong>Wind Speed:</strong>{{Forecast.windSpeed}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <!--FORECAST END-->
+
+            <!--HOURLY FORECAST-->
+            <div class="tab-pane fade" id="hourly-forecast-content" role="tabpanel" aria-labelledby="hourly-forecast-tab"
+              *ngIf="hourlyObject">
+              <div class="row">
+                <div *ngFor="let Hourly of hourlyObject.properties.periods" class="col-md-4">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <h4><strong>Start:</strong> <br> {{ Hourly.startTime.substr(0,10) }} <br>
+                            {{Hourly.startTime.substr(11,8)}}</h4>
+                        </div>
+                        <div class="col-xl-6">
+                          <h4><strong>End:</strong> <br> {{Hourly .endTime.substr(0,10)}} <br>
+                            {{Hourly.endTime.substr(11,8)}}</h4>
+                        </div>
+                      </div>
+                      <hr>
+                      <h3 class="text-center">{{Hourly.shortForecast}}</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md">
+                          <div class="card-img">
+                            <img [src]="Hourly.icon">
+                          </div>
+                        </div>
+                        <div class="col-md">
+                          <h2>{{Hourly.temperature}} {{Hourly.temperatureUnit}}&deg;</h2>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md">
+                          <p><strong>Wind Direction: </strong>{{Hourly.windDirection}}</p>
+                        </div>
+                        <div class="col-md">
+                          <p><strong>Wind Speed:</strong>{{Hourly.windSpeed}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <!--HOURLY FORECAST END-->
+
+            <!--STATIONS-->
+            <div class="tab-pane fade" id="stations-content" role="tabpanel" aria-labelledby="stations-tab" *ngIf="stationsObject">
+              <div class="row" *ngFor="let Station of stationsObject.features">
+                <div class="col-md">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3><strong>{{Station.properties.name}} </strong></h3>
+                      <h5> Station Identifier: {{Station.properties.stationIdentifier}}</h5>
+                    </div>
+                    <div class="card-body">
+                      <p>Longitude: {{Station.geometry.coordinates[0]}} </p>
+                      <p>Latitude: {{Station.geometry.coordinates[1]}}</p>
+                      <p>Observation Station: {{Station.id}}</p>
+                      <p>Elevation: {{Station.properties.elevation.value}} {{Station.properties.elevation.unitCode}}</p>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <!--STATIONS END-->
+
+          </div>
+          <!--WEATHER CONTENT END-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--WEATHER RESULTS END-->
+
+</div>

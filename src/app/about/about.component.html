@@ -1,0 +1,106 @@
+<div class="row text-center justify-content-center bg-dark">
+  <div class="col-md-9">
+    <br>
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title text-center">General Information About This Project</h1>
+      </div>
+      <div class="card-body">
+        <br>
+        <!--The Project Components-->
+        <h3 id="ProjectComponents" class="card-title">The Project Components</h3>
+        <p class="card-text">
+          I think I will use this space to talk a bit about components in Angular and what components I created and what
+          are within them.
+          <br><br>
+          First, my Angular-App has a <em>nav</em> component, which is (you guessed it) for navigations through
+          different components. This component will always be visible but based on what you click, the rest of the page
+          will be a different component.
+          <br><br>
+          By default, I have my <em>home</em> as the start of the application, which was
+          hard for me to figure out content for. Not much went into it besides some SASS and BootStrap.
+          <br><br>
+          As of right now, I have another component, which is meant to be one of eventually several projects,
+          <em>weather</em>. This component imports DataService which is used for the REST when getting returned JSON
+          from the National Weather Service (NWS). The import is done in this components TypeScript file. Then there is
+          the FormsModule import that is done through the <em>app.module.ts</em> file which allows me to do Two-Way data
+          binding between form-controls, such as inputs, and modules. Two-Way data binding and how it is easily achieved
+          is definayely the most interesting thing I have come across so far with angular, that along with components.
+          <br><br>
+          [Next Project/Component Information will go here]
+        </p>
+        <hr class="section-break">
+        <!--What Went Into This Project-->
+        <h3 id="IntoThisProject" class="card-title">What Went Into This Project</h3>
+        <p>
+          For starters, the main purpose of this was to gain some exposure with Angular. I decided to work with
+          Angular 7 because it is the latest version. However, by the time anyone is looking at this, it may not
+          be. So <a href="https://angular.io/guide/releases">here</a> is probably the best place to see what is
+          the latest version as well as predictions on future releases.
+        </p>
+        <hr>
+        <div class="row justify-content-center">
+          <div class="col-md-3">
+            <p class="card-text">
+              <br>
+              However, when getting started with Angular I had a few other things that I needed to pick up to really
+              get things started.
+            </p>
+            <br>
+          </div>
+          <div class="col-md-3">
+            <ul class="list-group">
+              <li class="list-group-item">BootStrap 4.2.1</li>
+              <li class="list-group-item">SASS</li>
+              <li class="list-group-item">TypeScript</li>
+            </ul>
+          </div>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+          <div class="col-md-3">
+            <p class="card-text">
+              <br>
+              Here are a couple of other topics/techniques relevant to this that aren't exactly new to me, but are
+              important to note. There may be more but these are key for how the projects I have or will create are
+              going to work.
+            </p>
+            <br>
+          </div>
+          <div class="col-md-3">
+            <ul class="list-group">
+              <li class="list-group-item">API Get Requests</li>
+              <li class="list-group-item">JSON Parsing</li>
+              <li class="list-group-item">Data Binding</li>
+              <li class="list-group-item">Document Object Model (DOM)</li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+        <p class="card-text">
+          Back to speaking about Angular, it wasn't really difficult to understand what was going on. Through some
+          dedication and persistence, anyone could learn how to use Angular and pick up what I did. What I am doing to
+          display these skills aren't meant to be difficult, just a way to pick up the skills and then show them on my
+          GitHub.
+        </p>
+        <p class="card-text">
+          That being said, I have one project as of now, which is the <a routerLink="/weather">Weather App</a>, which
+          does exactly what it says. There is a form that allows users to enter a longitude and latitude of their
+          desire and on submission sends a RESTful request to the National Weather Service (NWS) and displays (in a
+          semi-nice way) weather information of the location asked for.
+          <br><strong>Note: </strong>There is not much error-hendling present in the
+          app currently because I am focusing on getting stuff to work not foolproofing an app. Also, I have been
+          trying to work on making nicer layouts, and may or may not be succeading.
+        </p>
+        <hr class="section-break">
+        <!--I don't know yet, something cool-->
+        <h3 id="SomethingCool" class="card-title">I don't know yet, something cool</h3>
+        <p class="card-text">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore corrupti magnam sit facere, totam eos nisi
+          praesentium veniam quae repellendus repudiandae hic atque voluptate autem quaerat dicta temporibus sapiente
+          veritatis.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
